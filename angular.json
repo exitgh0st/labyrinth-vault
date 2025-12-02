@@ -27,8 +27,14 @@
               }
             ],
             "styles": [
-              "src/styles.scss"
-            ]
+              "src/styles/styles.scss",
+              "src/styles/material-theme.scss"
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/styles"
+              ]
+            }
           },
           "configurations": {
             "production": {
@@ -81,8 +87,39 @@
               }
             ],
             "styles": [
-              "src/styles.scss"
-            ]
+              "src/styles/styles.scss",
+              "src/styles/material-theme.scss"
+            ],"stylePreprocessorOptions": {
+              "includePaths": [
+                "src/styles"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "ng-admin-core": {
+      "projectType": "library",
+      "root": "projects/ng-admin-core",
+      "sourceRoot": "projects/ng-admin-core/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ng-admin-core/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/ng-admin-core/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:karma",
+          "options": {
+            "tsConfig": "projects/ng-admin-core/tsconfig.spec.json"
           }
         }
       }
