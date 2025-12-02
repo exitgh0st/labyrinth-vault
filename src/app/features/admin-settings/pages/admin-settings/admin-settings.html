@@ -1,0 +1,184 @@
+<div class="admin-settings-container">
+  <div class="admin-settings-header">
+    <h1>
+      <mat-icon>admin_panel_settings</mat-icon>
+      System Administration
+    </h1>
+    <p class="subtitle">Configure system-wide settings and preferences</p>
+  </div>
+
+  <mat-tab-group class="admin-tabs">
+    <!-- System Tab -->
+    <mat-tab label="System">
+      <div class="tab-content">
+        <mat-card class="settings-card">
+          <mat-card-header>
+            <mat-card-title>
+              <mat-icon>settings</mat-icon>
+              General System Settings
+            </mat-card-title>
+          </mat-card-header>
+          <mat-divider></mat-divider>
+          <mat-card-content>
+            <form [formGroup]="systemForm" class="settings-form">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Site Name</mat-label>
+                <input matInput formControlName="siteName" placeholder="Enter site name">
+                <mat-icon matPrefix>label</mat-icon>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>API Rate Limit (requests/minute)</mat-label>
+                <input matInput type="number" formControlName="apiRateLimit">
+                <mat-icon matPrefix>speed</mat-icon>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Session Timeout (minutes)</mat-label>
+                <input matInput type="number" formControlName="sessionTimeout">
+                <mat-icon matPrefix>timer</mat-icon>
+              </mat-form-field>
+
+              <div class="setting-item">
+                <div class="setting-info">
+                  <h3>Maintenance Mode</h3>
+                  <p>Temporarily disable access for maintenance</p>
+                </div>
+                <mat-slide-toggle formControlName="maintenanceMode"></mat-slide-toggle>
+              </div>
+
+              <div class="setting-item">
+                <div class="setting-info">
+                  <h3>User Registration</h3>
+                  <p>Allow new users to register accounts</p>
+                </div>
+                <mat-slide-toggle formControlName="registrationEnabled"></mat-slide-toggle>
+              </div>
+            </form>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </mat-tab>
+
+    <!-- Security Tab -->
+    <mat-tab label="Security">
+      <div class="tab-content">
+        <mat-card class="settings-card">
+          <mat-card-header>
+            <mat-card-title>
+              <mat-icon>security</mat-icon>
+              Security Configuration
+            </mat-card-title>
+          </mat-card-header>
+          <mat-divider></mat-divider>
+          <mat-card-content>
+            <form [formGroup]="securityForm" class="settings-form">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Password Minimum Length</mat-label>
+                <input matInput type="number" formControlName="passwordMinLength">
+                <mat-icon matPrefix>lock</mat-icon>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Password Expiry (days)</mat-label>
+                <input matInput type="number" formControlName="passwordExpiry">
+                <mat-icon matPrefix>event</mat-icon>
+                <mat-hint>Set to 0 for no expiry</mat-hint>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Max Login Attempts</mat-label>
+                <input matInput type="number" formControlName="maxLoginAttempts">
+                <mat-icon matPrefix>block</mat-icon>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Session Concurrency Limit</mat-label>
+                <input matInput type="number" formControlName="sessionConcurrency">
+                <mat-icon matPrefix>devices</mat-icon>
+              </mat-form-field>
+
+              <div class="setting-item">
+                <div class="setting-info">
+                  <h3>Two-Factor Authentication Required</h3>
+                  <p>Require all users to enable 2FA</p>
+                </div>
+                <mat-slide-toggle formControlName="twoFactorRequired"></mat-slide-toggle>
+              </div>
+            </form>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </mat-tab>
+
+    <!-- Email Tab -->
+    <mat-tab label="Email">
+      <div class="tab-content">
+        <mat-card class="settings-card">
+          <mat-card-header>
+            <mat-card-title>
+              <mat-icon>email</mat-icon>
+              Email Configuration
+            </mat-card-title>
+          </mat-card-header>
+          <mat-divider></mat-divider>
+          <mat-card-content>
+            <form [formGroup]="emailForm" class="settings-form">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>SMTP Host</mat-label>
+                <input matInput formControlName="smtpHost" placeholder="smtp.example.com">
+                <mat-icon matPrefix>dns</mat-icon>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>SMTP Port</mat-label>
+                <input matInput type="number" formControlName="smtpPort">
+                <mat-icon matPrefix>router</mat-icon>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>SMTP Username</mat-label>
+                <input matInput type="email" formControlName="smtpUser">
+                <mat-icon matPrefix>person</mat-icon>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>From Name</mat-label>
+                <input matInput formControlName="smtpFrom">
+                <mat-icon matPrefix>badge</mat-icon>
+              </mat-form-field>
+
+              <div class="test-email-section">
+                <button mat-stroked-button>
+                  <mat-icon>send</mat-icon>
+                  Send Test Email
+                </button>
+              </div>
+            </form>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+
+  <!-- Actions -->
+  <div class="settings-actions">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="saveSettings()"
+      [disabled]="isSaving()">
+      @if (isSaving()) {
+        <mat-icon>hourglass_empty</mat-icon>
+        Saving...
+      } @else {
+        <mat-icon>save</mat-icon>
+        Save All Settings
+      }
+    </button>
+    <button mat-stroked-button color="warn">
+      <mat-icon>warning</mat-icon>
+      Reset to Factory Defaults
+    </button>
+  </div>
+</div>
