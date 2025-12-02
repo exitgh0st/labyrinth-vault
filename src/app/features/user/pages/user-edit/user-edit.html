@@ -1,0 +1,10 @@
+<div class="page-container">
+    @if (user()) {
+    <app-user-form [user]="user()" [availableRoles]="availableRoles()" [isEditMode]="true" [isLoading]="isLoading()"
+        (formSubmit)="handleUpdate($event)" (formCancel)="handleCancel()" />
+    } @else if (isLoading()) {
+    <div class="loading">Loading user...</div>
+    } @else {
+    <div class="error">User not found</div>
+    }
+</div>

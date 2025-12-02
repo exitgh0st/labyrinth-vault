@@ -1,0 +1,196 @@
+<div class="page-container">
+  <!-- Back Button -->
+  <button class="back-button" (click)="onBackToList()">
+    ← Back to Users
+  </button>
+
+  <!-- Loading State -->
+  @if (isLoading() && !user()) {
+  <div class="loading-overlay">
+    <div class="spinner"></div>
+    <p>Loading user details...</p>
+  </div>
+  }
+
+  <!-- Error State -->
+  @else if (error()) {
+  <div class="error-container">
+    <div class="error-icon">⚠️</div>
+    <h2>Error Loading User</h2>
+    <p>{{ error() }}</p>
+    <button class="btn btn-primary" (click)="onBackToList()">
+      Back to Users List
+    </button>
+  </div>
+  }
+
+  <!-- User Details -->
+  @else if (user()) {
+  <div class="user-details-content">
+    <!-- Header Section -->
+    <div class="details-header">
+      <div class="user-avatar">
+        @if (user()!.avatarUrl) {
+        <img [src]="user()!.avatarUrl" [alt]="getFullName(user()!)" />
+        } @else {
+        <div class="avatar-placeholder">{{ getInitials(user()!) }}</div>
+        }
+      </div>
+      <div class="user-header-info">
+        <h1 class="user-name">{{ getFullName(user()!) }}</h1>
+        @if (user()!.displayName) {
+        <p class="user-display-name">@{{ user()!.displayName }}</p>
+        }
+        <div class="status-badges">
+          <span class="status-badge" [ngClass]="getAccountStatus(user()!).class">
+            {{ getAccountStatus(user()!).label }}
+          </span>
+          @if (user()!.emailVerified) {
+          <span class="status-badge badge-verified">
+            ✓ Email Verified
+          </span>
+          }
+        </div>
+      </div>
+      <div class="header-actions">
+        <button class="btn btn-primary" (click)="onEdit()" [disabled]="isLoading()">
+          Edit User
+        </button>
+        <button class="btn" [ngClass]="user()!.isActive ? 'btn-warning' : 'btn-success'" (click)="onToggleActive()"
+          [disabled]="isLoading()">
+          {{ user()!.isActive ? 'Deactivate' : 'Activate' }}
+        </button>
+        <button class="btn btn-danger" (click)="onDelete()" [disabled]="isLoading()">
+          Delete User
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="details-content">
+      <!-- Basic Information -->
+      <div class="info-section">
+        <h2 class="section-title">Basic Information</h2>
+        <div class="info-grid">
+          <div class="info-item">
+            <span class="info-label">Email</span>
+            <span class="info-value">{{ user()!.email }}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">First Name</span>
+            <span class="info-value">{{ user()!.firstName || 'Not set' }}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Last Name</span>
+            <span class="info-value">{{ user()!.lastName || 'Not set' }}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Display Name</span>
+            <span class="info-value">{{ user()!.displayName || 'Not set' }}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">User ID</span>
+            <span class="info-value mono">{{ user()!.id }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Account Status -->
+      <div class="info-section">
+        <h2 class="section-title">Account Status</h2>
+        <div class="info-grid">
+          <div class="info-item">
+            <span class="info-label">Account Active</span>
+            <span class="info-value">
+              <span [ngClass]="user()!.isActive ? 'text-success' : 'text-danger'">
+                {{ user()!.isActive ? 'Yes' : 'No' }}
+              </span>
+            </span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Email Verified</span>
+            <span class="info-value">
+              <span [ngClass]="user()!.emailVerified ? 'text-success' : 'text-warning'">
+                {{ user()!.emailVerified ? 'Yes' : 'No' }}
+              </span>
+            </span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Account Deleted</span>
+            <span class="info-value">
+              <span [ngClass]="user()!.isDeleted ? 'text-danger' : 'text-success'">
+                {{ user()!.isDeleted ? 'Yes' : 'No' }}
+              </span>
+            </span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Failed Login Attempts</span>
+            <span class="info-value">{{ user()!.failedLoginAttempts || 0 }}</span>
+          </div>
+          @if (user()!.lockedUntil) {
+          <div class="info-item full-width alert-item">
+            <span class="info-label">🔒 Account Locked Until</span>
+            <span class="info-value text-danger">{{ formatDate(user()!.lockedUntil) }}</span>
+          </div>
+          }
+        </div>
+      </div>
+
+      <!-- Timestamps -->
+      <div class="info-section">
+        <h2 class="section-title">Activity & Timestamps</h2>
+        <div class="info-grid">
+          <div class="info-item">
+            <span class="info-label">Created At</span>
+            <span class="info-value">{{ formatDate(user()!.createdAt) }}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Updated At</span>
+            <span class="info-value">{{ formatDate(user()!.updatedAt) }}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Last Login</span>
+            <span class="info-value">{{ formatDate(user()!.lastLoginAt) }}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Email Verified At</span>
+            <span class="info-value">{{ formatDate(user()!.emailVerifiedAt) }}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Password Changed At</span>
+            <span class="info-value">{{ formatDate(user()!.passwordChangedAt) }}</span>
+          </div>
+          @if (user()!.deletedAt) {
+          <div class="info-item">
+            <span class="info-label">Deleted At</span>
+            <span class="info-value text-danger">{{ formatDate(user()!.deletedAt) }}</span>
+          </div>
+          }
+        </div>
+      </div>
+
+      <!-- User Roles -->
+      @if (user()!.roles && user()!.roles!.length > 0) {
+      <div class="info-section">
+        <h2 class="section-title">User Roles</h2>
+        <div class="roles-list">
+          @for (role of user()!.roles; track role.id) {
+          <div class="role-card">
+            <div class="role-info">
+              <h3 class="role-name">{{ role.name }}</h3>
+              <p class="role-description">{{ role.description }}</p>
+            </div>
+          </div>
+          }
+        </div>
+      </div>
+      } @else {
+      <div class="info-section">
+        <h2 class="section-title">User Roles</h2>
+        <p class="no-data">No roles assigned to this user</p>
+      </div>
+      }
+    </div>
+  </div>
+  }
+</div>

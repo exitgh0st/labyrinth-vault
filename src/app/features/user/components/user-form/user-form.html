@@ -1,0 +1,193 @@
+<div class="user-form-container">
+  <div class="form-header">
+    <h2>{{ isEditMode() ? 'Edit User' : 'Create New User' }}</h2>
+  </div>
+
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="user-form">
+    <!-- Email -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Email</mat-label>
+      <input
+        matInput
+        type="email"
+        formControlName="email"
+        placeholder="user@example.com"
+        required
+      />
+      <mat-icon matPrefix>email</mat-icon>
+      <mat-error>{{ getFieldError('email') }}</mat-error>
+    </mat-form-field>
+
+    <!-- Role Selection with Autocomplete -->
+    @if (availableRoles().length > 0) {
+      <div class="form-group role-selection">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>User Roles</mat-label>
+          <mat-chip-grid #chipGrid>
+            @for (role of selectedRoles(); track role.id) {
+              <mat-chip-row (removed)="removeRole(role)">
+                {{ role.name }}
+                <button matChipRemove>
+                  <mat-icon>cancel</mat-icon>
+                </button>
+              </mat-chip-row>
+            }
+          </mat-chip-grid>
+          <input
+            matInput
+            formControlName="roleSearch"
+            placeholder="Search and select roles..."
+            [matAutocomplete]="auto"
+            [matChipInputFor]="chipGrid"
+            (input)="onRoleSearchChange($any($event.target).value)"
+          />
+          <mat-icon matPrefix>group</mat-icon>
+          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectRole($event.option.value)">
+            @for (role of filteredRoles(); track role.id) {
+              <mat-option [value]="role">
+                {{ role.name }}
+                @if (role.description) {
+                  <span class="role-description">- {{ role.description }}</span>
+                }
+              </mat-option>
+            }
+            @if (filteredRoles().length === 0) {
+              <mat-option [value]="null" [disabled]="true">
+                No roles available
+              </mat-option>
+            }
+          </mat-autocomplete>
+        </mat-form-field>
+        @if (selectedRoles().length === 0) {
+          <mat-hint class="role-hint">Please select at least one role</mat-hint>
+        }
+      </div>
+    }
+
+    <!-- First Name -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>First Name</mat-label>
+      <input
+        matInput
+        formControlName="firstName"
+        placeholder="John"
+      />
+      <mat-icon matPrefix>person</mat-icon>
+    </mat-form-field>
+
+    <!-- Last Name -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Last Name</mat-label>
+      <input
+        matInput
+        formControlName="lastName"
+        placeholder="Doe"
+      />
+      <mat-icon matPrefix>person_outline</mat-icon>
+    </mat-form-field>
+
+    <!-- Display Name -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Display Name</mat-label>
+      <input
+        matInput
+        formControlName="displayName"
+        placeholder="John Doe"
+      />
+      <mat-icon matPrefix>badge</mat-icon>
+    </mat-form-field>
+
+    <!-- Avatar URL -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Avatar URL</mat-label>
+      <input
+        matInput
+        type="url"
+        formControlName="avatarUrl"
+        placeholder="https://example.com/avatar.jpg"
+      />
+      <mat-icon matPrefix>image</mat-icon>
+      <mat-error>{{ getFieldError('avatarUrl') }}</mat-error>
+    </mat-form-field>
+
+    <!-- Password (conditional) -->
+    @if (!isEditMode() || userForm.get('password')?.value) {
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          [type]="showPassword() ? 'text' : 'password'"
+          formControlName="password"
+          [placeholder]="isEditMode() ? 'Leave blank to keep current password' : 'Create a strong password'"
+          [required]="!isEditMode()"
+        />
+        <mat-icon matPrefix>lock</mat-icon>
+        <button
+          mat-icon-button
+          matSuffix
+          type="button"
+          (click)="togglePasswordVisibility()"
+          [attr.aria-label]="showPassword() ? 'Hide password' : 'Show password'"
+        >
+          <mat-icon>{{ showPassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+        <mat-error>{{ getFieldError('password') }}</mat-error>
+        @if (!isEditMode()) {
+          <mat-hint>Must include uppercase, lowercase, number, and special character</mat-hint>
+        }
+      </mat-form-field>
+
+      <!-- Confirm Password -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Confirm Password</mat-label>
+        <input
+          matInput
+          [type]="showConfirmPassword() ? 'text' : 'password'"
+          formControlName="confirmPassword"
+          placeholder="Re-enter password"
+          [required]="!isEditMode() || userForm.get('password')?.value"
+        />
+        <mat-icon matPrefix>lock</mat-icon>
+        <button
+          mat-icon-button
+          matSuffix
+          type="button"
+          (click)="toggleConfirmPasswordVisibility()"
+          [attr.aria-label]="showConfirmPassword() ? 'Hide password' : 'Show password'"
+        >
+          <mat-icon>{{ showConfirmPassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+        <mat-error>{{ getFieldError('confirmPassword') }}</mat-error>
+      </mat-form-field>
+    }
+
+    <!-- Active Status -->
+    <div class="checkbox-group">
+      <mat-checkbox formControlName="isActive" color="primary">
+        Active User
+      </mat-checkbox>
+    </div>
+
+    <!-- Form Actions -->
+    <div class="form-actions">
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="isLoading() || userForm.invalid || selectedRoles().length === 0"
+      >
+        <mat-icon>save</mat-icon>
+        {{ isEditMode() ? 'Update User' : 'Create User' }}
+      </button>
+      <button
+        mat-button
+        type="button"
+        (click)="onCancel()"
+        [disabled]="isLoading()"
+      >
+        <mat-icon>cancel</mat-icon>
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>
