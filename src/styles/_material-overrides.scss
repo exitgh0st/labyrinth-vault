@@ -1,0 +1,372 @@
+/**
+ * Material Design component overrides
+ * Customize Material components to match the design system
+ */
+@use '@angular/material' as mat;
+@use 'variables' as *;
+
+// Global Material overrides
+.mat-mdc-card {
+  box-shadow: $shadow-md !important;
+  border-radius: $border-radius-md !important;
+}
+
+.mat-mdc-button,
+.mat-mdc-raised-button,
+.mat-mdc-flat-button,
+.mat-mdc-stroked-button {
+  border-radius: $border-radius-sm !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.5px !important;
+}
+
+.mat-mdc-fab,
+.mat-mdc-mini-fab {
+  box-shadow: $shadow-lg !important;
+}
+
+// Form field overrides
+.mat-mdc-form-field {
+  font-size: 14px;
+
+  .mat-mdc-text-field-wrapper {
+    border-radius: $border-radius-sm !important;
+  }
+
+  &.mat-focused .mat-mdc-form-field-focus-overlay {
+    opacity: 0.05 !important;
+  }
+}
+
+// Input overrides
+.mat-mdc-input-element {
+  font-size: 14px;
+}
+
+// Select overrides
+.mat-mdc-select {
+  font-size: 14px;
+}
+
+.mat-mdc-select-panel {
+  border-radius: $border-radius-sm !important;
+  box-shadow: $shadow-lg !important;
+}
+
+// Chip overrides
+.mat-mdc-chip {
+  border-radius: $border-radius-lg !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+
+  &.mat-primary {
+    background-color: rgba($primary-color, 0.15) !important;
+    color: $primary-color !important;
+  }
+
+  &.mat-accent {
+    background-color: rgba($secondary-color, 0.15) !important;
+    color: $secondary-color !important;
+  }
+
+  &.mat-warn {
+    background-color: rgba($danger-color, 0.15) !important;
+    color: $danger-color !important;
+  }
+}
+
+// Dialog overrides
+.mat-mdc-dialog-container {
+  border-radius: $border-radius-lg !important;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3) !important;
+
+  .mat-mdc-dialog-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: $text-primary;
+  }
+
+  .mat-mdc-dialog-content {
+    color: $text-secondary;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  .mat-mdc-dialog-actions {
+    padding: 16px 24px !important;
+    gap: 12px;
+  }
+}
+
+// Snackbar overrides
+.mat-mdc-snack-bar-container {
+  border-radius: $border-radius-sm !important;
+  box-shadow: $shadow-lg !important;
+
+  &.snackbar-success {
+    --mdc-snackbar-container-color: #{$success-color};
+    --mat-snack-bar-button-color: #ffffff;
+    --mdc-snackbar-supporting-text-color: #ffffff;
+  }
+
+  &.snackbar-error {
+    --mdc-snackbar-container-color: #{$danger-color};
+    --mat-snack-bar-button-color: #ffffff;
+    --mdc-snackbar-supporting-text-color: #ffffff;
+  }
+
+  &.snackbar-warning {
+    --mdc-snackbar-container-color: #{$warning-color};
+    --mat-snack-bar-button-color: #ffffff;
+    --mdc-snackbar-supporting-text-color: #ffffff;
+  }
+
+  &.snackbar-info {
+    --mdc-snackbar-container-color: #{$info-color};
+    --mat-snack-bar-button-color: #ffffff;
+    --mdc-snackbar-supporting-text-color: #ffffff;
+  }
+}
+
+// Table overrides
+.mat-mdc-table {
+  border-radius: $border-radius-sm;
+  overflow: hidden;
+
+  .mat-mdc-header-row {
+    background-color: $bg-tertiary;
+  }
+
+  .mat-mdc-header-cell {
+    font-weight: 600;
+    color: $text-primary;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .mat-mdc-cell {
+    font-size: 14px;
+    color: $text-secondary;
+  }
+
+  .mat-mdc-row:hover {
+    background-color: $bg-secondary;
+    transition: background-color 0.2s ease;
+  }
+}
+
+// Paginator overrides
+.mat-mdc-paginator {
+  border-top: 1px solid $border-color;
+  background-color: $bg-secondary;
+  border-radius: 0 0 $border-radius-sm $border-radius-sm;
+
+  .mat-mdc-paginator-page-size-label,
+  .mat-mdc-paginator-range-label {
+    font-size: 13px;
+    color: $text-secondary;
+  }
+}
+
+// Menu overrides
+.mat-mdc-menu-panel {
+  border-radius: $border-radius-sm !important;
+  box-shadow: $shadow-lg !important;
+  min-width: 200px;
+
+  .mat-mdc-menu-item {
+    font-size: 14px;
+    height: 48px;
+
+    &:hover {
+      background-color: rgba($primary-color, 0.05);
+    }
+
+    mat-icon {
+      margin-right: 12px;
+      color: $text-secondary;
+    }
+  }
+}
+
+// Tooltip overrides
+.mat-mdc-tooltip {
+  font-size: 12px;
+  border-radius: $border-radius-sm;
+  padding: 6px 12px;
+  background-color: rgba(0, 0, 0, 0.9) !important;
+}
+
+// Progress bar overrides
+.mat-mdc-progress-bar {
+  border-radius: $border-radius-sm;
+  overflow: hidden;
+}
+
+// Slide toggle overrides
+.mat-mdc-slide-toggle {
+  .mdc-switch__handle {
+    border-radius: 50%;
+  }
+
+  &.mat-checked {
+    .mdc-switch__track {
+      background-color: rgba($primary-color, 0.5) !important;
+    }
+  }
+}
+
+// Checkbox overrides
+.mat-mdc-checkbox {
+  .mdc-checkbox__background {
+    border-radius: $border-radius-sm / 2;
+  }
+}
+
+// Radio button overrides
+.mat-mdc-radio-button {
+  .mdc-radio__outer-circle {
+    border-width: 2px;
+  }
+}
+
+// Tab overrides
+.mat-mdc-tab-group {
+  .mat-mdc-tab-labels {
+    border-bottom: 1px solid $border-color;
+  }
+
+  .mat-mdc-tab {
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    min-width: 120px;
+
+    &:hover {
+      background-color: rgba($primary-color, 0.05);
+    }
+  }
+
+  .mat-mdc-tab-label-active {
+    opacity: 1;
+  }
+}
+
+// Stepper overrides
+.mat-stepper-horizontal,
+.mat-stepper-vertical {
+  border-radius: $border-radius-md;
+  background-color: $bg-primary;
+
+  .mat-step-header {
+    &:hover {
+      background-color: rgba($primary-color, 0.05);
+    }
+
+    .mat-step-icon {
+      background-color: $primary-color;
+    }
+
+    .mat-step-icon-selected {
+      background-color: $primary-color;
+    }
+  }
+}
+
+// Expansion panel overrides
+.mat-expansion-panel {
+  border-radius: $border-radius-sm !important;
+  box-shadow: $shadow-sm !important;
+  margin-bottom: 8px;
+
+  .mat-expansion-panel-header {
+    font-weight: 500;
+
+    &:hover {
+      background-color: rgba($primary-color, 0.03);
+    }
+  }
+}
+
+// Toolbar overrides
+.mat-toolbar {
+  box-shadow: $shadow-sm;
+
+  &.mat-primary {
+    background-color: $primary-color;
+    color: white;
+  }
+}
+
+// Sidenav overrides
+.mat-drawer {
+  box-shadow: $shadow-md;
+}
+
+.mat-drawer-backdrop {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+// List overrides
+.mat-mdc-list-item {
+  border-radius: $border-radius-sm;
+  margin: 2px 8px;
+
+  &:hover {
+    background-color: rgba($primary-color, 0.05);
+  }
+
+  &.active {
+    background-color: rgba($primary-color, 0.1);
+    color: $primary-color;
+
+    mat-icon {
+      color: $primary-color;
+    }
+  }
+}
+
+// Badge overrides
+.mat-badge-content {
+  font-weight: 600;
+  font-size: 11px;
+}
+
+// Bottom sheet overrides
+.mat-bottom-sheet-container {
+  border-radius: $border-radius-lg $border-radius-lg 0 0 !important;
+  box-shadow: $shadow-lg !important;
+}
+
+// Date picker overrides
+.mat-datepicker-content {
+  border-radius: $border-radius-md !important;
+  box-shadow: $shadow-lg !important;
+
+  .mat-calendar {
+    font-family: inherit;
+  }
+
+  .mat-calendar-body-selected {
+    background-color: $primary-color;
+  }
+}
+
+// Autocomplete overrides
+.mat-autocomplete-panel {
+  border-radius: $border-radius-sm !important;
+  box-shadow: $shadow-lg !important;
+  max-height: 300px;
+
+  .mat-mdc-option {
+    font-size: 14px;
+
+    &:hover {
+      background-color: rgba($primary-color, 0.05);
+    }
+
+    &.mat-selected {
+      background-color: rgba($primary-color, 0.1);
+    }
+  }
+}
