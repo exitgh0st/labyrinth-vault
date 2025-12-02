@@ -1,0 +1,77 @@
+<div class="unauthorized-container">
+  <div class="unauthorized-wrapper">
+    <mat-card class="unauthorized-card">
+      <div class="icon-wrapper">
+        <mat-icon class="warning-icon">block</mat-icon>
+      </div>
+
+      <mat-card-header>
+        <div class="header-content">
+          <h1>Access Denied</h1>
+          <p class="subtitle">You don't have permission to access this page</p>
+        </div>
+      </mat-card-header>
+
+      <mat-card-content>
+        <div class="info-section">
+          @if (authService.isAuthenticated()) {
+            <div class="user-info">
+              <mat-icon>person</mat-icon>
+              <div class="user-details">
+                <span class="label">Logged in as:</span>
+                <span class="value">{{ authService.user()?.email }}</span>
+              </div>
+            </div>
+
+            @if (permissionService.userRoles().length > 0) {
+              <div class="roles-info">
+                <mat-icon>badge</mat-icon>
+                <div class="roles-details">
+                  <span class="label">Your roles:</span>
+                  <span class="value">{{ permissionService.userRoles().join(', ') }}</span>
+                </div>
+              </div>
+            }
+          }
+
+          <div class="message">
+            <mat-icon>info</mat-icon>
+            <p>
+              This page is restricted. If you believe you should have access,
+              please contact your administrator or try logging in with a different account.
+            </p>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="goToDashboard()"
+            class="action-button">
+            <mat-icon>home</mat-icon>
+            <span>Go to Dashboard</span>
+          </button>
+
+          <button
+            mat-stroked-button
+            (click)="goBack()"
+            class="action-button">
+            <mat-icon>arrow_back</mat-icon>
+            <span>Go Back</span>
+          </button>
+
+          @if (authService.isAuthenticated()) {
+            <button
+              mat-stroked-button
+              (click)="logout()"
+              class="action-button logout-button">
+              <mat-icon>logout</mat-icon>
+              <span>Logout</span>
+            </button>
+          }
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
