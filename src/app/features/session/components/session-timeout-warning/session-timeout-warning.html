@@ -1,0 +1,46 @@
+@if (showWarning()) {
+  <div class="timeout-warning-overlay">
+    <div class="timeout-warning-modal">
+      <!-- Header -->
+      <div class="modal-header">
+        <mat-icon class="warning-icon">schedule</mat-icon>
+        <h2>Session Expiring Soon</h2>
+      </div>
+
+      <!-- Content -->
+      <div class="modal-content">
+        <p>Your session will expire due to inactivity.</p>
+
+        <div class="time-display">
+          <span class="time-label">Time Remaining</span>
+          <span class="time-value">{{ getFormattedTime() }}</span>
+        </div>
+
+        <mat-progress-bar
+          mode="determinate"
+          [value]="getProgress()"
+          color="warn"
+        ></mat-progress-bar>
+      </div>
+
+      <!-- Actions -->
+      <div class="modal-actions">
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="extendSession()"
+        >
+          <mat-icon>check</mat-icon>
+          Stay Logged In
+        </button>
+        <button
+          mat-button
+          (click)="logoutNow()"
+        >
+          <mat-icon>logout</mat-icon>
+          Logout Now
+        </button>
+      </div>
+    </div>
+  </div>
+}

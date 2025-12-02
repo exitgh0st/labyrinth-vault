@@ -1,0 +1,99 @@
+<div class="sessions-container">
+  <!-- Header -->
+  <div class="header">
+    <div class="header-text">
+      <h1>Active Sessions</h1>
+      <p class="subtitle">Manage your active sessions across all devices</p>
+    </div>
+    @if (!loading() && sessionStore.activeSessions().length > 0) {
+      <button
+        mat-raised-button
+        color="warn"
+        (click)="logoutAll()"
+        class="logout-all-btn"
+      >
+        <mat-icon>logout</mat-icon>
+        Logout All Devices
+      </button>
+    }
+  </div>
+
+  <!-- Loading state with skeleton -->
+  @if (loading()) {
+    <div class="table-container">
+      <app-skeleton-loader [rows]="3" [columns]="5" type="table" />
+    </div>
+  }
+
+  <!-- Empty state -->
+  @if (!loading() && sessionStore.activeSessions().length === 0) {
+    <app-empty-state
+      icon="devices"
+      title="No active sessions"
+      message="You don't have any active sessions at the moment"
+      size="medium"
+    />
+  }
+
+  <!-- Data table -->
+  @if (!loading() && sessionStore.activeSessions().length > 0) {
+    <div class="table-container">
+      <table mat-table [dataSource]="sessionStore.activeSessions()" class="sessions-table">
+        <!-- Device Column -->
+        <ng-container matColumnDef="device">
+          <th mat-header-cell *matHeaderCellDef>Device</th>
+          <td mat-cell *matCellDef="let session" class="device-cell">
+            <mat-icon class="device-icon">{{ getDeviceIcon(session.userAgent) }}</mat-icon>
+            <span class="device-name">{{ getDeviceInfo(session.userAgent) }}</span>
+          </td>
+        </ng-container>
+
+        <!-- IP Address Column -->
+        <ng-container matColumnDef="ipAddress">
+          <th mat-header-cell *matHeaderCellDef>IP Address</th>
+          <td mat-cell *matCellDef="let session">
+            <mat-chip>{{ session.ipAddress || 'Unknown' }}</mat-chip>
+          </td>
+        </ng-container>
+
+        <!-- Last Used Column -->
+        <ng-container matColumnDef="lastUsed">
+          <th mat-header-cell *matHeaderCellDef>Last Active</th>
+          <td mat-cell *matCellDef="let session">
+            {{ formatDate(session.lastUsedAt) }}
+          </td>
+        </ng-container>
+
+        <!-- Created At Column -->
+        <ng-container matColumnDef="createdAt">
+          <th mat-header-cell *matHeaderCellDef>Created</th>
+          <td mat-cell *matCellDef="let session">
+            {{ formatDate(session.createdAt) }}
+          </td>
+        </ng-container>
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let session" class="actions-cell">
+            <button
+              mat-icon-button
+              color="warn"
+              (click)="revokeSession(session.id)"
+              matTooltip="Revoke this session"
+            >
+              <mat-icon>logout</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: displayedColumns"
+          class="table-row"
+        ></tr>
+      </table>
+    </div>
+  }
+</div>

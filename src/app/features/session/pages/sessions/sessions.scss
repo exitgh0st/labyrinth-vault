@@ -1,0 +1,140 @@
+@use 'variables' as *;
+
+.sessions-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+@media (max-width: 768px) {
+  .sessions-container {
+    padding: 1rem;
+  }
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+  gap: 1rem;
+
+  .header-text {
+    flex: 1;
+
+    h1 {
+      margin: 0;
+      font-size: 2rem;
+      color: $text-primary;
+    }
+
+    .subtitle {
+      margin: 0.5rem 0 0 0;
+      color: $text-secondary;
+      font-size: 1rem;
+    }
+  }
+
+  .logout-all-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: stretch;
+
+    .logout-all-btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+}
+
+.table-container {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.sessions-table {
+  width: 100%;
+
+  .table-row {
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: #f5f5f5;
+    }
+  }
+
+  .device-cell {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+
+    .device-icon {
+      color: $primary-color;
+      font-size: 24px;
+      width: 24px;
+      height: 24px;
+    }
+
+    .device-name {
+      font-weight: 500;
+      color: $text-primary;
+    }
+  }
+
+  .actions-cell {
+    button {
+      margin-right: 0.25rem;
+    }
+  }
+
+  mat-chip {
+    font-size: 0.75rem;
+    font-family: 'Courier New', monospace;
+  }
+}
+
+// Material table overrides
+::ng-deep {
+  .sessions-table {
+    th.mat-mdc-header-cell {
+      font-weight: 600;
+      color: $text-primary;
+      background-color: #fafafa;
+    }
+
+    td.mat-mdc-cell {
+      padding: 1rem;
+    }
+  }
+}
+
+// Responsive table
+@media (max-width: 768px) {
+  .sessions-table {
+    font-size: 0.875rem;
+
+    td.mat-mdc-cell,
+    th.mat-mdc-header-cell {
+      padding: 0.75rem 0.5rem;
+    }
+
+    .device-cell {
+      gap: 0.5rem;
+
+      .device-icon {
+        font-size: 20px;
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
+}
