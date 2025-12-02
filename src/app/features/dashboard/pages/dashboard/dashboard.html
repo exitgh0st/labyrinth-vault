@@ -1,0 +1,129 @@
+<div class="dashboard-container">
+  <div class="dashboard-header">
+    <div class="greeting-section">
+      <h1>{{ greeting() }}, {{ userName() }}!</h1>
+      <p class="subtitle">Welcome back to your dashboard</p>
+    </div>
+
+    <div class="user-info">
+      <mat-icon class="user-avatar">account_circle</mat-icon>
+      <div class="user-details">
+        <span class="user-name">{{ authService.user()?.email }}</span>
+        @if (permissionService.userRoles().length > 0) {
+          <span class="user-role">{{ permissionService.userRoles()[0] }}</span>
+        }
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats Grid -->
+  <div class="stats-grid">
+    @for (stat of stats; track stat.title) {
+      <mat-card class="stat-card">
+        <div class="stat-icon" [style.background-color]="stat.color + '20'">
+          <mat-icon [style.color]="stat.color">{{ stat.icon }}</mat-icon>
+        </div>
+        <div class="stat-content">
+          <span class="stat-title">{{ stat.title }}</span>
+          <div class="stat-value-row">
+            <span class="stat-value">{{ stat.value }}</span>
+            @if (stat.trend) {
+              <span
+                class="stat-trend"
+                [class.positive]="stat.trend.isPositive"
+                [class.negative]="!stat.trend.isPositive">
+                <mat-icon>{{ stat.trend.isPositive ? 'arrow_upward' : 'arrow_downward' }}</mat-icon>
+                <span>{{ stat.trend.value }}%</span>
+              </span>
+            }
+          </div>
+        </div>
+      </mat-card>
+    }
+  </div>
+
+  <!-- Main Content Grid -->
+  <div class="content-grid">
+    <!-- Quick Actions -->
+    <mat-card class="quick-actions-card">
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>flash_on</mat-icon>
+          Quick Actions
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="actions-grid">
+          @for (action of quickActions; track action.route) {
+            @if (canAccessAction(action)) {
+              <a [routerLink]="action.route" class="action-item">
+                <div class="action-icon" [style.background-color]="action.color + '20'">
+                  <mat-icon [style.color]="action.color">{{ action.icon }}</mat-icon>
+                </div>
+                <div class="action-content">
+                  <h3>{{ action.title }}</h3>
+                  <p>{{ action.description }}</p>
+                </div>
+                <mat-icon class="action-arrow">chevron_right</mat-icon>
+              </a>
+            }
+          }
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Recent Activity -->
+    <mat-card class="activity-card">
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>history</mat-icon>
+          Recent Activity
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="activity-list">
+          @for (activity of recentActivities(); track activity.title) {
+            <div class="activity-item">
+              <div class="activity-icon" [style.background-color]="activity.color + '20'">
+                <mat-icon [style.color]="activity.color">{{ activity.icon }}</mat-icon>
+              </div>
+              <div class="activity-content">
+                <h4>{{ activity.title }}</h4>
+                <p>{{ activity.description }}</p>
+                <span class="activity-time">{{ getRelativeTime(activity.timestamp) }}</span>
+              </div>
+            </div>
+          }
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Admin Section (Only visible to admins) -->
+  <div *can="{ roles: ['admin'] }" class="admin-section">
+    <mat-card class="admin-card">
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>admin_panel_settings</mat-icon>
+          Admin Tools
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="admin-actions">
+          <button mat-raised-button color="primary" routerLink="/admin/users">
+            <mat-icon>manage_accounts</mat-icon>
+            Manage Users
+          </button>
+          <button mat-raised-button color="accent" routerLink="/admin/roles">
+            <mat-icon>badge</mat-icon>
+            Manage Roles
+          </button>
+          <button mat-stroked-button routerLink="/admin/settings">
+            <mat-icon>settings</mat-icon>
+            System Settings
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
