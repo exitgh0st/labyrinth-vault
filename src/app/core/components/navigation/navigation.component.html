@@ -1,0 +1,123 @@
+<mat-sidenav-container class="sidenav-container" [hasBackdrop]="isMobile()">
+  <!-- Sidenav -->
+  <mat-sidenav
+    #sidenav
+    [mode]="isMobile() ? 'over' : 'side'"
+    [opened]="!isMobile() || sidenavOpened()"
+    (closed)="sidenavOpened.set(false)"
+    class="sidenav">
+
+    <div class="sidenav-header">
+      <div class="app-logo">
+        <mat-icon class="logo-icon">lock</mat-icon>
+        <span class="app-name">Labyrinth Vault</span>
+      </div>
+    </div>
+
+    <mat-nav-list class="nav-list">
+      @for (item of navItems; track item.route) {
+        @if (canAccessNavItem(item)) {
+          @if (!item.children) {
+            <a
+              mat-list-item
+              [routerLink]="item.route"
+              routerLinkActive="active"
+              (click)="closeSidenav()"
+              class="nav-item">
+              <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+              <span matListItemTitle>{{ item.label }}</span>
+            </a>
+          } @else {
+            <div class="nav-group">
+              <div class="nav-group-label">
+                <mat-icon>{{ item.icon }}</mat-icon>
+                <span>{{ item.label }}</span>
+              </div>
+              @for (child of item.children; track child.route) {
+                @if (canAccessNavItem(child)) {
+                  <a
+                    mat-list-item
+                    [routerLink]="child.route"
+                    routerLinkActive="active"
+                    (click)="closeSidenav()"
+                    class="nav-item nav-child">
+                    <mat-icon matListItemIcon>{{ child.icon }}</mat-icon>
+                    <span matListItemTitle>{{ child.label }}</span>
+                  </a>
+                }
+              }
+            </div>
+          }
+        }
+      }
+    </mat-nav-list>
+
+    <div class="sidenav-footer">
+      <mat-divider></mat-divider>
+      <div class="user-info-sidenav">
+        <div class="user-avatar">{{ userInitials() }}</div>
+        <div class="user-details">
+          <span class="user-name">{{ userName() }}</span>
+          <span class="user-email">{{ authService.user()?.email }}</span>
+        </div>
+      </div>
+    </div>
+  </mat-sidenav>
+
+  <!-- Main Content -->
+  <mat-sidenav-content class="sidenav-content">
+    <!-- Toolbar -->
+    <mat-toolbar color="primary" class="toolbar">
+      <button
+        mat-icon-button
+        (click)="toggleSidenav()"
+        class="menu-button"
+        aria-label="Toggle menu">
+        <mat-icon>menu</mat-icon>
+      </button>
+
+      <span class="toolbar-spacer"></span>
+
+      <!-- User Menu -->
+      <button
+        mat-icon-button
+        [matMenuTriggerFor]="userMenu"
+        class="user-menu-button"
+        aria-label="User menu">
+        <div class="user-avatar-small">{{ userInitials() }}</div>
+      </button>
+
+      <mat-menu #userMenu="matMenu" class="user-menu">
+        <div class="user-menu-header">
+          <div class="user-avatar-menu">{{ userInitials() }}</div>
+          <div class="user-info-menu">
+            <span class="user-name">{{ userName() }}</span>
+            <span class="user-email">{{ authService.user()?.email }}</span>
+            @if (permissionService.userRoles().length > 0) {
+              <span class="user-role">{{ permissionService.userRoles().join(', ') }}</span>
+            }
+          </div>
+        </div>
+        <mat-divider></mat-divider>
+        <button mat-menu-item (click)="navigateToProfile()">
+          <mat-icon>person</mat-icon>
+          <span>Profile</span>
+        </button>
+        <button mat-menu-item (click)="navigateToSettings()">
+          <mat-icon>settings</mat-icon>
+          <span>Settings</span>
+        </button>
+        <mat-divider></mat-divider>
+        <button mat-menu-item (click)="logout()" class="logout-menu-item">
+          <mat-icon>logout</mat-icon>
+          <span>Logout</span>
+        </button>
+      </mat-menu>
+    </mat-toolbar>
+
+    <!-- Page Content -->
+    <div class="page-content">
+      <ng-content></ng-content>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
