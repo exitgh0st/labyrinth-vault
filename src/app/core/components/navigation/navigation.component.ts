@@ -104,6 +104,12 @@ export class NavigationComponent {
           permissions: ['roles:manage']
         },
         {
+          label: 'Sessions',
+          route: '/admin/sessions',
+          icon: 'history',
+          roles: ['admin']
+        },
+        {
           label: 'Settings',
           route: '/admin/settings',
           icon: 'settings',

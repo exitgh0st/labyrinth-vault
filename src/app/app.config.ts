@@ -28,7 +28,9 @@ export const appConfig: ApplicationConfig = {
       },
       routes: {
         afterLogin: '/dashboard',
-        afterLogout: '/login',
+        afterLogout: '/auth/login',
+        login: '/auth/login',
+        unauthorized: '/auth/unauthorized',
       }
     }),
     provideHttpClient(
