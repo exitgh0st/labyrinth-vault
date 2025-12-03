@@ -7,58 +7,59 @@
     (closed)="sidenavOpened.set(false)"
     class="sidenav">
 
-    <div class="sidenav-header">
-      <div class="app-logo">
-        <mat-icon class="logo-icon">lock</mat-icon>
-        <span class="app-name">Labyrinth Vault</span>
+    <div class="sidenav-wrapper">
+      <div class="sidenav-header">
+        <div class="app-logo">
+          <mat-icon class="logo-icon">lock</mat-icon>
+          <span class="app-name">Labyrinth Vault</span>
+        </div>
       </div>
-    </div>
 
-    <mat-nav-list class="nav-list">
-      @for (item of navItems; track item.route) {
-        @if (canAccessNavItem(item)) {
-          @if (!item.children) {
-            <a
-              mat-list-item
-              [routerLink]="item.route"
-              routerLinkActive="active"
-              (click)="closeSidenav()"
-              class="nav-item">
-              <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
-              <span matListItemTitle>{{ item.label }}</span>
-            </a>
-          } @else {
-            <div class="nav-group">
-              <div class="nav-group-label">
-                <mat-icon>{{ item.icon }}</mat-icon>
-                <span>{{ item.label }}</span>
-              </div>
-              @for (child of item.children; track child.route) {
-                @if (canAccessNavItem(child)) {
-                  <a
-                    mat-list-item
-                    [routerLink]="child.route"
-                    routerLinkActive="active"
-                    (click)="closeSidenav()"
-                    class="nav-item nav-child">
-                    <mat-icon matListItemIcon>{{ child.icon }}</mat-icon>
-                    <span matListItemTitle>{{ child.label }}</span>
-                  </a>
+      <mat-nav-list class="nav-list">
+        @for (item of navItems; track item.route) {
+          @if (canAccessNavItem(item)) {
+            @if (!item.children) {
+              <a
+                mat-list-item
+                [routerLink]="item.route"
+                routerLinkActive="active"
+                (click)="closeSidenav()"
+                class="nav-item">
+                <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+                <span matListItemTitle>{{ item.label }}</span>
+              </a>
+            } @else {
+              <div class="nav-group">
+                <div class="nav-group-label">
+                  <mat-icon>{{ item.icon }}</mat-icon>
+                  <span>{{ item.label }}</span>
+                </div>
+                @for (child of item.children; track child.route) {
+                  @if (canAccessNavItem(child)) {
+                    <a
+                      mat-list-item
+                      [routerLink]="child.route"
+                      routerLinkActive="active"
+                      (click)="closeSidenav()"
+                      class="nav-item nav-child">
+                      <mat-icon matListItemIcon>{{ child.icon }}</mat-icon>
+                      <span matListItemTitle>{{ child.label }}</span>
+                    </a>
+                  }
                 }
-              }
-            </div>
+              </div>
+            }
           }
         }
-      }
-    </mat-nav-list>
+      </mat-nav-list>
 
-    <div class="sidenav-footer">
-      <mat-divider></mat-divider>
-      <div class="user-info-sidenav">
-        <div class="user-avatar">{{ userInitials() }}</div>
-        <div class="user-details">
-          <span class="user-name">{{ userName() }}</span>
-          <span class="user-email">{{ authService.user()?.email }}</span>
+      <div class="sidenav-footer">
+        <div class="user-info-sidenav">
+          <div class="user-avatar">{{ userInitials() }}</div>
+          <div class="user-details">
+            <span class="user-name">{{ userName() }}</span>
+            <span class="user-email">{{ authService.user()?.email }}</span>
+          </div>
         </div>
       </div>
     </div>
