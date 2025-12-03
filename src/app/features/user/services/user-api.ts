@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from '../models/user.model';
-import { ListQuery, ListResponse, BaseApiService } from '@labyrinth/ng-admin-core';
+import { ListQuery, ListResponse, BaseApiService } from 'ng-admin-core';
 
 /**
  * Extended query interface for user filtering
@@ -44,45 +44,5 @@ export class UserApi extends BaseApiService<User, string> {
       this.getResourceUrl(),
       { params, withCredentials: true }
     );
-  }
-
-  /**
-   * Legacy method for backward compatibility
-   * @deprecated Use getAll instead
-   */
-  getUsers(query?: UserListQuery): Observable<ListResponse<User>> {
-    return this.getAll(query);
-  }
-
-  /**
-   * Legacy method for backward compatibility
-   * @deprecated Use getById instead
-   */
-  getUserById(id: string): Observable<User> {
-    return this.getById(id);
-  }
-
-  /**
-   * Legacy method for backward compatibility
-   * @deprecated Use create instead
-   */
-  createUser(user: Partial<User>): Observable<User> {
-    return this.create(user);
-  }
-
-  /**
-   * Legacy method for backward compatibility
-   * @deprecated Use update instead
-   */
-  updateUser(id: string, user: Partial<User>): Observable<User> {
-    return this.update(id, user);
-  }
-
-  /**
-   * Legacy method for backward compatibility
-   * @deprecated Use delete instead
-   */
-  deleteUser(id: string): Observable<void> {
-    return this.delete(id);
   }
 }

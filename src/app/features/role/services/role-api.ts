@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Role } from '../models/role.model';
-import { ListQuery, ListResponse, BaseApiService } from '@labyrinth/ng-admin-core';
+import { ListQuery, ListResponse, BaseApiService } from 'ng-admin-core';
 
 /**
  * Extended query interface for role filtering
@@ -40,45 +40,5 @@ export class RoleApi extends BaseApiService<Role, number> {
       this.getResourceUrl(),
       { params, withCredentials: true }
     );
-  }
-
-  /**
-   * Legacy method for backward compatibility
-   * @deprecated Use getAll instead
-   */
-  getRoles(query?: RoleListQuery): Observable<ListResponse<Role>> {
-    return this.getAll(query);
-  }
-
-  /**
-   * Legacy method for backward compatibility
-   * @deprecated Use getById instead
-   */
-  getRoleById(id: number): Observable<Role> {
-    return this.getById(id);
-  }
-
-  /**
-   * Legacy method for backward compatibility
-   * @deprecated Use create instead
-   */
-  createRole(role: Partial<Role>): Observable<Role> {
-    return this.create(role);
-  }
-
-  /**
-   * Legacy method for backward compatibility
-   * @deprecated Use update instead
-   */
-  updateRole(id: number, role: Partial<Role>): Observable<Role> {
-    return this.update(id, role);
-  }
-
-  /**
-   * Legacy method for backward compatibility
-   * @deprecated Use delete instead
-   */
-  deleteRole(id: number): Observable<void> {
-    return this.delete(id);
   }
 }
