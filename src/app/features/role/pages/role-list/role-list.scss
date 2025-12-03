@@ -79,10 +79,7 @@
     }
   }
 
-  .role-name {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+  td.role-name {
     font-weight: 600;
     color: $text-primary;
 
@@ -91,6 +88,8 @@
       width: 20px;
       height: 20px;
       color: $secondary-color;
+      vertical-align: middle;
+      margin-right: 0.5rem;
     }
   }
 
@@ -120,10 +119,12 @@
       font-weight: 600;
       color: $text-primary;
       background-color: #fafafa;
+      padding: 1rem;
     }
 
     td.mat-mdc-cell {
       padding: 1rem;
+      vertical-align: middle;
     }
   }
 }
