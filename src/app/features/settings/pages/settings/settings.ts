@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
@@ -29,7 +29,7 @@ import { MatInputModule } from '@angular/material/input';
   styleUrl: './settings.scss'
 })
 export class Settings {
-  private fb = signal(new FormBuilder()).value;
+  private fb = inject(FormBuilder);
 
   isSaving = signal(false);
 
