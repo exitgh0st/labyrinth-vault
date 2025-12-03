@@ -13,6 +13,11 @@
 .sidenav-container {
   height: 100%;
   width: 100%;
+
+  // Disable Material's built-in sidenav content transition
+  ::ng-deep .mat-drawer-content {
+    transition: none !important;
+  }
 }
 
 .sidenav {
