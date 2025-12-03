@@ -98,7 +98,7 @@ export class Register {
     this.authService.register(this.registerForm.value).subscribe({
       next: () => {
         this.isLoading.set(false);
-        this.router.navigate(['/home']);
+        this.router.navigate(['/dashboard']);
       },
       error: (error) => {
         this.isLoading.set(false);
