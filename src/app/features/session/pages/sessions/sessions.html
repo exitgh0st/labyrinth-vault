@@ -21,13 +21,13 @@
   <!-- Loading state with skeleton -->
   @if (loading()) {
     <div class="table-container">
-      <app-skeleton-loader [rows]="3" [columns]="5" type="table" />
+      <lb-skeleton-loader [rows]="3" [columns]="5" type="table" />
     </div>
   }
 
   <!-- Empty state -->
   @if (!loading() && sessionStore.activeSessions().length === 0) {
-    <app-empty-state
+    <lb-empty-state
       icon="devices"
       title="No active sessions"
       message="You don't have any active sessions at the moment"

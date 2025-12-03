@@ -19,13 +19,13 @@
   <!-- Loading state with skeleton -->
   @if (loading()) {
     <div class="table-container">
-      <app-skeleton-loader [rows]="5" [columns]="5" type="table" />
+      <lb-skeleton-loader [rows]="5" [columns]="5" type="table" />
     </div>
   }
 
   <!-- Empty state -->
   @if (!loading() && items().length === 0) {
-    <app-empty-state
+    <lb-empty-state
       icon="shield"
       title="No roles found"
       message="Get started by creating your first role to manage permissions"
