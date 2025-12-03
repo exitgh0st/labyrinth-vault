@@ -92,37 +92,34 @@ export class NavigationComponent {
       label: 'Reports',
       route: '/reports',
       icon: 'assessment',
-      permissions: ['reports:view']
+      roles: ['ADMIN']
     },
     {
       label: 'Admin',
       route: '/admin',
       icon: 'admin_panel_settings',
-      roles: ['admin'],
+      roles: ['ADMIN'],
       children: [
         {
           label: 'Users',
           route: '/admin/users',
           icon: 'people',
-          permissions: ['users:manage']
         },
         {
           label: 'Roles',
           route: '/admin/roles',
           icon: 'badge',
-          permissions: ['roles:manage']
         },
         {
           label: 'Sessions',
           route: '/admin/sessions',
           icon: 'history',
-          roles: ['admin']
+          roles: ['ADMIN']
         },
         {
           label: 'Settings',
           route: '/admin/settings',
           icon: 'settings',
-          permissions: ['settings:edit']
         }
       ]
     }
