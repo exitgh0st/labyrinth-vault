@@ -39,7 +39,7 @@ export class UserDetails {
     this.isLoading.set(true);
     this.error.set(null);
     
-    this.userApi.getUserById(userId).subscribe({
+    this.userApi.getById(userId).subscribe({
       next: (userData) => {
         this.user.set(userData ?? null);
         this.error.set(null);
@@ -76,7 +76,7 @@ export class UserDetails {
     }).then(result => {
       if (result.isConfirmed) {
         this.isLoading.set(true);
-        this.userApi.deleteUser(currentUser.id).subscribe({
+        this.userApi.delete(currentUser.id).subscribe({
           next: () => {
             this.isLoading.set(false);
             Swal.fire({
@@ -123,7 +123,7 @@ export class UserDetails {
       if (!result.isConfirmed) return;
 
       this.isLoading.set(true);
-      this.userApi.updateUser(currentUser.id, {
+      this.userApi.update(currentUser.id, {
         isActive: !currentUser.isActive
       }).subscribe({
         next: (updatedUser) => {

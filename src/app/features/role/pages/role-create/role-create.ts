@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { Role } from '../../models/role.model';
 import { RoleApi } from '../../services/role-api';
 import { Router } from '@angular/router';
@@ -21,7 +21,7 @@ export class RoleCreate {
 
   handleCreate(roleData: Partial<Role>) {
     this.isLoading.set(true);
-    this.roleApi.createRole(roleData).subscribe({
+    this.roleApi.create(roleData).subscribe({
       next: (newRole: Role) => {
         console.log('Role created:', newRole);
         this.isLoading.set(false);

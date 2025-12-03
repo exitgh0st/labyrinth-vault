@@ -33,7 +33,7 @@ export class RoleEdit {
 
   loadRole(roleId: number): void {
     this.isLoading.set(true);
-    this.roleApi.getRoleById(roleId).subscribe({
+    this.roleApi.getById(roleId).subscribe({
       next: (roleData: Role) => {
         this.role.set(roleData);
         this.isLoading.set(false);
@@ -57,7 +57,7 @@ export class RoleEdit {
     if (!currentRole) return;
 
     this.isLoading.set(true);
-    this.roleApi.updateRole(currentRole.id, roleData).subscribe({
+    this.roleApi.update(currentRole.id, roleData).subscribe({
       next: (updatedRole: Role) => {
         this.isLoading.set(false);
         Swal.fire({

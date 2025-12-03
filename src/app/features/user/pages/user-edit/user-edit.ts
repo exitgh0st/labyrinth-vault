@@ -6,8 +6,8 @@ import { Role } from '../../../role/models/role.model';
 import { User } from '../../models/user.model';
 import { UserForm } from '../../components/user-form/user-form';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { AuthStore } from '../../../auth/services/auth-store';
 import Swal from 'sweetalert2';
+import { AuthService, ListResponse } from 'ng-admin-core';
 
 @Component({
   selector: 'app-user-edit',
@@ -21,7 +21,7 @@ export class UserEdit {
   private userApi = inject(UserApi);
   private roleApi = inject(RoleApi);
   private router = inject(Router);
-  private authStore = inject(AuthStore);
+  private authService = inject(AuthService);
 
   user = signal<User | null>(null);
   availableRoles = signal<Role[]>([]);
@@ -41,7 +41,7 @@ export class UserEdit {
 
   loadUser(userId: string): void {
     this.isLoading.set(true);
-    this.userApi.getUserById(userId).subscribe({
+    this.userApi.getById(userId).subscribe({
       next: (userData: User) => {
         this.user.set(userData);
         this.isLoading.set(false);
@@ -55,8 +55,8 @@ export class UserEdit {
   }
 
   loadRoles(): void {
-    this.roleApi.getRoles().subscribe({
-      next: (response) => {
+    this.roleApi.getAll().subscribe({
+      next: (response: ListResponse<Role>) => {
         this.availableRoles.set(response.data || []);
       },
       error: (error) => {
@@ -70,12 +70,12 @@ export class UserEdit {
     if (!currentUser) return;
 
     this.isLoading.set(true);
-    this.userApi.updateUser(currentUser.id, userData).subscribe({
+    this.userApi.update(currentUser.id, userData).subscribe({
       next: (updatedUser: User) => {
         this.isLoading.set(false);
 
-        if (updatedUser.id === this.authStore.currentUser()?.id) {
-          this.authStore.updateUser(updatedUser);
+        if (updatedUser.id === this.authService.user()?.id) {
+          this.authService.updateUser(updatedUser);
         }
 
         Swal.fire({

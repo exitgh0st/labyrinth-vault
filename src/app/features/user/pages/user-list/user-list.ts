@@ -8,7 +8,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { User } from '../../models/user.model';
 import { UserApi } from '../../services/user-api';
-import { BaseListComponent, SkeletonLoader, EmptyState } from '@labyrinth/ng-admin-core';
+import { BaseListComponent, SkeletonLoader, EmptyState } from 'ng-admin-core';
 
 /**
  * User list page component with Material table and pagination
@@ -32,7 +32,7 @@ import { BaseListComponent, SkeletonLoader, EmptyState } from '@labyrinth/ng-adm
 })
 export class UserList extends BaseListComponent<User, string> {
   protected override apiService = inject(UserApi);
-  protected override baseRoute = '/users';
+  protected override baseRoute = 'admin/users';
   protected override itemName = 'user';
 
   /**

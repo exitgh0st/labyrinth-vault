@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { RoleApi } from '../../../role/services/role-api';
 import { UserForm } from '../../components/user-form/user-form';
 import Swal from 'sweetalert2';
+import { ListResponse } from 'ng-admin-core';
 
 @Component({
   selector: 'app-user-create',
@@ -26,8 +27,8 @@ export class UserCreate {
   }
 
   loadRoles() {
-    this.roleApi.getRoles().subscribe({
-      next: (response) => {
+    this.roleApi.getAll().subscribe({
+      next: (response: ListResponse<Role>) => {
         this.availableRoles.set(response.data || []);
       },
       error: (error) => {
@@ -38,7 +39,7 @@ export class UserCreate {
 
   handleCreate(userData: Partial<User>) {
     this.isLoading.set(true);
-    this.userApi.createUser(userData).subscribe({
+    this.userApi.create(userData).subscribe({
       next: (newUser: User) => {
         console.log('User created:', newUser);
         this.router.navigate(['/users', newUser.id]);
