@@ -131,7 +131,7 @@ export interface PermissionCheckOptions {
   /**
    * If true, user must have ALL specified permissions
    * If false, user must have ANY of the specified permissions
-   * @default false
+   * @default true
    */
   requireAll?: boolean;
 }

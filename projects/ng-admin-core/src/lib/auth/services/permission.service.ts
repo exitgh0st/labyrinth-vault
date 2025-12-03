@@ -127,7 +127,7 @@ export class PermissionService {
     options: PermissionCheckOptions = {}
   ): boolean {
     const { roles = [], permissions = [] } = requirements;
-    const { requireAll = false } = options;
+    const { requireAll = true } = options;
 
     if (roles.length === 0 && permissions.length === 0) {
       return true; // No requirements, allow access
