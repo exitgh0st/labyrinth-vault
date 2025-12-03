@@ -45,15 +45,23 @@ export interface RoleGuardData {
 export function roleGuard(
   roles?: string[],
   permissions?: string[],
-  requireAll = false
+  requireAll = true
 ): CanActivateFn {
   return (route, state) => {
     const permissionService = inject(PermissionService);
     const router = inject(Router);
     const authConfig = inject(AUTH_CONFIG);
 
+    // Debug logging
+    console.log('[RoleGuard] Checking access for route:', state.url);
+    console.log('[RoleGuard] Required roles:', roles);
+    console.log('[RoleGuard] Required permissions:', permissions);
+    console.log('[RoleGuard] User roles:', permissionService.getRoleNames());
+
     // Check permissions
     const hasAccess = permissionService.canActivateRoute(roles, permissions, requireAll);
+
+    console.log('[RoleGuard] Access granted:', hasAccess);
 
     if (hasAccess) {
       return true;
@@ -92,7 +100,6 @@ export const roleGuardWithData: CanActivateFn = (route, state) => {
   const permissionService = inject(PermissionService);
   const router = inject(Router);
   const authConfig = inject(AUTH_CONFIG);
-  const platformId = inject(PLATFORM_ID);
 
   // Get requirements from route data
   const data = route.data as RoleGuardData;
