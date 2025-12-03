@@ -44,8 +44,16 @@ export class NavigationComponent {
   private breakpointService = inject(BreakpointService);
 
   sidenavOpened = signal(false);
+  sidenavCollapsed = signal(false);
 
   isMobile = this.breakpointService.isMobile;
+
+  sidenavOpen = computed(() => {
+    if (this.isMobile()) {
+      return this.sidenavOpened();
+    }
+    return true; // Always open on desktop
+  });
 
   userName = computed(() => {
     const user = this.authService.user();
@@ -132,6 +140,18 @@ export class NavigationComponent {
 
   toggleSidenav(): void {
     this.sidenavOpened.update(value => !value);
+  }
+
+  toggleSidenavCollapse(): void {
+    if (this.isMobile()) {
+      this.sidenavOpened.update(value => !value);
+    } else {
+      this.sidenavCollapsed.update(value => !value);
+    }
+  }
+
+  onSidenavClosed(): void {
+    this.sidenavOpened.set(false);
   }
 
   closeSidenav(): void {

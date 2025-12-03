@@ -1,81 +1,17 @@
-<mat-sidenav-container class="sidenav-container" [hasBackdrop]="isMobile()">
-  <!-- Sidenav -->
-  <mat-sidenav
-    #sidenav
-    [mode]="isMobile() ? 'over' : 'side'"
-    [opened]="!isMobile() || sidenavOpened()"
-    (closed)="sidenavOpened.set(false)"
-    class="sidenav">
-
-    <div class="sidenav-wrapper">
-      <div class="sidenav-header">
-        <div class="app-logo">
-          <mat-icon class="logo-icon">lock</mat-icon>
-          <span class="app-name">Labyrinth Vault</span>
-        </div>
-      </div>
-
-      <mat-nav-list class="nav-list">
-        @for (item of navItems; track item.route) {
-          @if (canAccessNavItem(item)) {
-            @if (!item.children) {
-              <a
-                mat-list-item
-                [routerLink]="item.route"
-                routerLinkActive="active"
-                (click)="closeSidenav()"
-                class="nav-item">
-                <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
-                <span matListItemTitle>{{ item.label }}</span>
-              </a>
-            } @else {
-              <div class="nav-group">
-                <div class="nav-group-label">
-                  <mat-icon>{{ item.icon }}</mat-icon>
-                  <span>{{ item.label }}</span>
-                </div>
-                @for (child of item.children; track child.route) {
-                  @if (canAccessNavItem(child)) {
-                    <a
-                      mat-list-item
-                      [routerLink]="child.route"
-                      routerLinkActive="active"
-                      (click)="closeSidenav()"
-                      class="nav-item nav-child">
-                      <mat-icon matListItemIcon>{{ child.icon }}</mat-icon>
-                      <span matListItemTitle>{{ child.label }}</span>
-                    </a>
-                  }
-                }
-              </div>
-            }
-          }
-        }
-      </mat-nav-list>
-
-      <div class="sidenav-footer">
-        <div class="user-info-sidenav">
-          <div class="user-avatar">{{ userInitials() }}</div>
-          <div class="user-details">
-            <span class="user-name">{{ userName() }}</span>
-            <span class="user-email">{{ authService.user()?.email }}</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </mat-sidenav>
-
-  <!-- Main Content -->
-  <mat-sidenav-content class="sidenav-content">
-    <!-- Toolbar -->
-    <mat-toolbar color="primary" class="toolbar">
+<div class="app-container">
+  <!-- Toolbar -->
+  <mat-toolbar color="primary" class="toolbar">
       <button
         mat-icon-button
-        (click)="toggleSidenav()"
-        class="menu-button"
-        aria-label="Toggle menu">
+        (click)="toggleSidenavCollapse()"
+        class="menu-toggle-button"
+        aria-label="Toggle sidebar">
         <mat-icon>menu</mat-icon>
       </button>
+
+      <div class="app-logo">
+        <span class="app-name">Labyrinth Vault</span>
+      </div>
 
       <span class="toolbar-spacer"></span>
 
@@ -116,9 +52,77 @@
       </mat-menu>
     </mat-toolbar>
 
-    <!-- Page Content -->
-    <div class="page-content">
-      <ng-content></ng-content>
-    </div>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+  <div class="content-wrapper">
+    <mat-sidenav-container class="sidenav-container" [hasBackdrop]="isMobile()" autosize>
+      <!-- Sidenav -->
+      <mat-sidenav
+        #sidenav
+        [mode]="isMobile() ? 'over' : 'side'"
+        [opened]="sidenavOpen()"
+        (closed)="onSidenavClosed()"
+        class="sidenav"
+        [class.collapsed]="!isMobile() && sidenavCollapsed()">
+
+        <div class="sidenav-wrapper">
+          <div class="sidenav-content-wrapper" [class.hidden]="!isMobile() && sidenavCollapsed()">
+            <mat-nav-list class="nav-list">
+              @for (item of navItems; track item.route) {
+                @if (canAccessNavItem(item)) {
+                  @if (!item.children) {
+                    <a
+                      mat-list-item
+                      [routerLink]="item.route"
+                      routerLinkActive="active"
+                      (click)="closeSidenav()"
+                      class="nav-item">
+                      <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+                      <span matListItemTitle>{{ item.label }}</span>
+                    </a>
+                  } @else {
+                    <div class="nav-group">
+                      <div class="nav-group-label">
+                        <mat-icon>{{ item.icon }}</mat-icon>
+                        <span>{{ item.label }}</span>
+                      </div>
+                      @for (child of item.children; track child.route) {
+                        @if (canAccessNavItem(child)) {
+                          <a
+                            mat-list-item
+                            [routerLink]="child.route"
+                            routerLinkActive="active"
+                            (click)="closeSidenav()"
+                            class="nav-item nav-child">
+                            <mat-icon matListItemIcon>{{ child.icon }}</mat-icon>
+                            <span matListItemTitle>{{ child.label }}</span>
+                          </a>
+                        }
+                      }
+                    </div>
+                  }
+                }
+              }
+            </mat-nav-list>
+
+            <div class="sidenav-footer">
+              <div class="user-info-sidenav">
+                <div class="user-avatar">{{ userInitials() }}</div>
+                <div class="user-details">
+                  <span class="user-name">{{ userName() }}</span>
+                  <span class="user-email">{{ authService.user()?.email }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-sidenav>
+
+      <!-- Main Content -->
+      <mat-sidenav-content class="sidenav-content">
+        <!-- Page Content -->
+        <div class="page-content">
+          <ng-content></ng-content>
+        </div>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  </div>
+</div>
