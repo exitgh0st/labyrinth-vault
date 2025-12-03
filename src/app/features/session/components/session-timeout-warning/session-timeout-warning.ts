@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { AuthStore } from '../../../auth/services/auth-store';
 import { takeWhile, timer } from 'rxjs';
+import { AuthService } from 'ng-admin-core';
 
 /**
  * Session timeout warning component that displays a modal
@@ -23,8 +23,7 @@ import { takeWhile, timer } from 'rxjs';
   styleUrl: './session-timeout-warning.scss',
 })
 export class SessionTimeoutWarning {
-  private authStore = inject(AuthStore);
-
+  private authService = inject(AuthService);
   showWarning = signal(false);
   timeRemaining = signal(0);
 
@@ -33,7 +32,7 @@ export class SessionTimeoutWarning {
 
   constructor() {
     effect(() => {
-      if (this.authStore.isAuthenticated()) {
+      if (this.authService.isAuthenticated()) {
         this.startWatchdog();
       }
     });
@@ -65,7 +64,7 @@ export class SessionTimeoutWarning {
       this.timeRemaining.set(remaining);
 
       if (remaining === 0) {
-        this.authStore.logout().subscribe();
+        this.authService.logout().subscribe();
       }
     });
   }
@@ -75,14 +74,14 @@ export class SessionTimeoutWarning {
    */
   extendSession(): void {
     this.showWarning.set(false);
-    this.authStore.recordActivity();
+    this.authService.recordActivity();
   }
 
   /**
    * Log out the user immediately
    */
   logoutNow(): void {
-    this.authStore.logout().subscribe();
+    this.authService.logout().subscribe();
   }
 
   /**
