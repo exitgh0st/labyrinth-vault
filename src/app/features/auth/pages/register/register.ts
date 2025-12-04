@@ -10,11 +10,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { GoogleSignin } from '../../components/google-signin/google-signin';
 import { AuthService, ZodValidators, registerSchema } from 'ng-admin-core';
 import { ValidationMessageService } from 'ng-admin-core';
-import z from 'zod';
-
-const passwordSchema = z
-  .string()
-  .min(4, 'Password must be at least 4 characters');
+import { passwordSchema } from '../../../../shared/schemas/validation.schemas';
 
 const customRegisterSchema = registerSchema.safeExtend({
   password: passwordSchema,
