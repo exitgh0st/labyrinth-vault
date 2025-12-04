@@ -100,7 +100,7 @@ export class Dashboard {
       icon: 'manage_accounts',
       route: '/admin/users',
       color: '#667eea',
-      roles: ['admin']
+      roles: ['ADMIN']
     },
     {
       title: 'Reports',
@@ -108,7 +108,6 @@ export class Dashboard {
       icon: 'assessment',
       route: '/reports',
       color: '#4caf50',
-      permissions: ['reports:view']
     },
     {
       title: 'Settings',
@@ -116,8 +115,7 @@ export class Dashboard {
       icon: 'settings',
       route: '/settings',
       color: '#ff9800',
-      roles: ['admin'],
-      permissions: ['settings:edit']
+      roles: ['ADMIN']
     },
     {
       title: 'Profile',
