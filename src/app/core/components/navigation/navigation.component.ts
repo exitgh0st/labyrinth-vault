@@ -8,6 +8,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { AuthService, PermissionService, BreakpointService } from 'ng-admin-core';
 
 interface NavItem {
@@ -33,6 +34,7 @@ interface NavItem {
     MatSidenavModule,
     MatListModule,
     MatDividerModule,
+    MatTooltipModule,
   ],
   templateUrl: './navigation.component.html',
   styleUrl: './navigation.component.scss'

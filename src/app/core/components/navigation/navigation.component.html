@@ -64,6 +64,50 @@
         [class.collapsed]="!isMobile() && sidenavCollapsed()">
 
         <div class="sidenav-wrapper">
+          <!-- Collapsed icon-only navigation -->
+          @if (!isMobile() && sidenavCollapsed()) {
+            <div class="collapsed-nav">
+              @for (item of navItems; track item.route) {
+                @if (canAccessNavItem(item)) {
+                  @if (!item.children) {
+                    <a
+                      mat-icon-button
+                      [routerLink]="item.route"
+                      routerLinkActive="active"
+                      class="collapsed-nav-item"
+                      [matTooltip]="item.label"
+                      matTooltipPosition="right">
+                      <mat-icon>{{ item.icon }}</mat-icon>
+                    </a>
+                  } @else {
+                    <!-- Parent item with children -->
+                    <button
+                      mat-icon-button
+                      class="collapsed-nav-item collapsed-nav-group"
+                      [matTooltip]="item.label"
+                      matTooltipPosition="right">
+                      <mat-icon>{{ item.icon }}</mat-icon>
+                    </button>
+                    <!-- Child items -->
+                    @for (child of item.children; track child.route) {
+                      @if (canAccessNavItem(child)) {
+                        <a
+                          mat-icon-button
+                          [routerLink]="child.route"
+                          routerLinkActive="active"
+                          class="collapsed-nav-item collapsed-nav-child"
+                          [matTooltip]="child.label"
+                          matTooltipPosition="right">
+                          <mat-icon>{{ child.icon }}</mat-icon>
+                        </a>
+                      }
+                    }
+                  }
+                }
+              }
+            </div>
+          }
+
           <div class="sidenav-content-wrapper" [class.hidden]="!isMobile() && sidenavCollapsed()">
             <mat-nav-list class="nav-list">
               @for (item of navItems; track item.route) {
