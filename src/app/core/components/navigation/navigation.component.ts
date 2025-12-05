@@ -96,12 +96,6 @@ export class NavigationComponent {
       icon: 'devices'
     },
     {
-      label: 'Reports',
-      route: '/reports',
-      icon: 'assessment',
-      roles: ['ADMIN']
-    },
-    {
       label: 'Admin',
       route: '/admin',
       icon: 'admin_panel_settings',
@@ -122,6 +116,11 @@ export class NavigationComponent {
           route: '/admin/sessions',
           icon: 'history',
           roles: ['ADMIN']
+        },
+        {
+          label: 'Reports',
+          route: '/reports',
+          icon: 'assessment',
         },
         {
           label: 'Settings',
