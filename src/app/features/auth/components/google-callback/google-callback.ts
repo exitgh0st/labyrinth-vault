@@ -1,6 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from 'ng-admin-core';
+import { AuthService } from '@labyrinth-team/ng-admin-core';
 
 @Component({
   selector: 'app-google-callback',

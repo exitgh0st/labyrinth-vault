@@ -5,7 +5,7 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { of, BehaviorSubject } from 'rxjs';
 import { signal } from '@angular/core';
 import { NavigationComponent } from './navigation.component';
-import { AuthService, PermissionService } from 'ng-admin-core';
+import { AuthService, PermissionService } from '@labyrinth-team/ng-admin-core';
 
 describe('NavigationComponent', () => {
   let component: NavigationComponent;

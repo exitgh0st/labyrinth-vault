@@ -1,5 +1,5 @@
 import { Component, inject, Input } from '@angular/core';
-import { AuthService } from 'ng-admin-core';
+import { AuthService } from '@labyrinth-team/ng-admin-core';
 
 @Component({
   selector: 'app-google-signin',

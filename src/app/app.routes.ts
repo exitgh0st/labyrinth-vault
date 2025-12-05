@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { authGuard, roleGuard } from 'ng-admin-core';
+import { authGuard, roleGuard } from '@labyrinth-team/ng-admin-core';
 import { RoleEnum } from './features/role/enums/role.enum';
 
 export const routes: Routes = [

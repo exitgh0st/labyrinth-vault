@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Profile } from './profile';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { AuthService } from 'ng-admin-core';
+import { AuthService } from '@labyrinth-team/ng-admin-core';
 import { signal } from '@angular/core';
 
 describe('Profile', () => {

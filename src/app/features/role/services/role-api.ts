@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Role } from '../models/role.model';
-import { ListQuery, ListResponse, BaseApiService } from 'ng-admin-core';
+import { ListQuery, ListResponse, BaseApiService } from '@labyrinth-team/ng-admin-core';
 
 /**
  * Extended query interface for role filtering

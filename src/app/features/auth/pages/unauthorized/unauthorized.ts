@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { AuthService, PermissionService } from 'ng-admin-core';
+import { AuthService, PermissionService } from '@labyrinth-team/ng-admin-core';
 
 @Component({
   selector: 'app-unauthorized',

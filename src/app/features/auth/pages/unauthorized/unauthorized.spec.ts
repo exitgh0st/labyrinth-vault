@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
 import { UnauthorizedComponent } from './unauthorized.component';
-import { AuthService, PermissionService } from 'ng-admin-core';
+import { AuthService, PermissionService } from '@labyrinth-team/ng-admin-core';
 import { signal } from '@angular/core';
 
 describe('UnauthorizedComponent', () => {

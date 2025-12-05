@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { authGuard } from 'ng-admin-core';
+import { authGuard } from '@labyrinth-team/ng-admin-core';
 
 export const dashboardRoutes: Routes = [
   {

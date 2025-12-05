@@ -30,6 +30,7 @@
     "@angular/platform-browser": "^20.1.0",
     "@angular/platform-browser-dynamic": "^20.3.14",
     "@angular/router": "^20.1.0",
+    "@labyrinth-team/ng-admin-core": "^1.0.0",
     "rxjs": "~7.8.0",
     "sweetalert2": "^11.26.3",
     "tslib": "^2.3.0",

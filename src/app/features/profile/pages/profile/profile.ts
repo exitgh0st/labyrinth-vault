@@ -8,7 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatChipsModule } from '@angular/material/chips';
-import { AuthService, ZodValidators, ValidationMessageService, DialogService } from 'ng-admin-core';
+import { AuthService, ZodValidators, ValidationMessageService, DialogService } from '@labyrinth-team/ng-admin-core';
 import { UserApi } from '../../../user/services/user-api';
 import { profileUpdateSchema, passwordChangeSchema } from '../../../../shared/schemas/validation.schemas';
 

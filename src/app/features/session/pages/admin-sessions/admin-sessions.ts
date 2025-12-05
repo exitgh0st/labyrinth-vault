@@ -7,7 +7,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatCardModule } from '@angular/material/card';
-import { DialogService, NotificationService, SkeletonLoader, EmptyState } from 'ng-admin-core';
+import { DialogService, NotificationService, SkeletonLoader, EmptyState } from '@labyrinth-team/ng-admin-core';
 import { SessionApi, SessionListQuery } from '../../services/session-api';
 import { Session } from '../../models/session';
 

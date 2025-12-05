@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { guestGuard } from 'ng-admin-core';
+import { guestGuard } from '@labyrinth-team/ng-admin-core';
 
 export const authRoutes: Routes = [
   {

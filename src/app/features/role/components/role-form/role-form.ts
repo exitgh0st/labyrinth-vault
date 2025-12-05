@@ -7,8 +7,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { Role } from '../../models/role.model';
-import { ZodValidators, roleFormSchema } from 'ng-admin-core';
-import { ValidationMessageService } from 'ng-admin-core';
+import { ZodValidators, roleFormSchema } from '@labyrinth-team/ng-admin-core';
+import { ValidationMessageService } from '@labyrinth-team/ng-admin-core';
 
 @Component({
   selector: 'app-role-form',

@@ -5,7 +5,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatGridListModule } from '@angular/material/grid-list';
-import { AuthService, PermissionService, CanDirective } from 'ng-admin-core';
+import { AuthService, PermissionService, CanDirective } from '@labyrinth-team/ng-admin-core';
 import { UserApi } from '../../../user/services/user-api';
 import { SessionApi } from '../../../session/services/session-api';
 

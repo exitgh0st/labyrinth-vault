@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { takeWhile, timer } from 'rxjs';
-import { AuthService } from 'ng-admin-core';
+import { AuthService } from '@labyrinth-team/ng-admin-core';
 
 /**
  * Session timeout warning component that displays a modal

@@ -2,7 +2,7 @@ import { Injectable, inject, signal } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
-import { ListQuery, ListResponse } from 'ng-admin-core';
+import { ListQuery, ListResponse } from '@labyrinth-team/ng-admin-core';
 import { Session } from '../models/session';
 
 /**

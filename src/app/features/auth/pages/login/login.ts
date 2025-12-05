@@ -8,8 +8,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { GoogleSignin } from '../../components/google-signin/google-signin';
-import { AuthService, ZodValidators, loginSchema } from 'ng-admin-core';
-import { ValidationMessageService } from 'ng-admin-core';
+import { AuthService, ZodValidators, loginSchema } from '@labyrinth-team/ng-admin-core';
+import { ValidationMessageService } from '@labyrinth-team/ng-admin-core';
 
 @Component({
   selector: 'app-login',

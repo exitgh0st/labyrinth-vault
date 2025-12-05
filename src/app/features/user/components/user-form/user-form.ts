@@ -10,8 +10,8 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { User } from '../../models/user.model';
 import { Role } from '../../../role/models/role.model';
-import { ZodValidators, userCreateSchema, userEditSchema } from 'ng-admin-core';
-import { ValidationMessageService } from 'ng-admin-core';
+import { ZodValidators, userCreateSchema, userEditSchema } from '@labyrinth-team/ng-admin-core';
+import { ValidationMessageService } from '@labyrinth-team/ng-admin-core';
 
 @Component({
   selector: 'app-user-form',

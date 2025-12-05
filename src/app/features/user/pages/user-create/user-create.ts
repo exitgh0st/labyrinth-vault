@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { RoleApi } from '../../../role/services/role-api';
 import { UserForm } from '../../components/user-form/user-form';
 import Swal from 'sweetalert2';
-import { ListResponse } from 'ng-admin-core';
+import { ListResponse } from '@labyrinth-team/ng-admin-core';
 
 @Component({
   selector: 'app-user-create',

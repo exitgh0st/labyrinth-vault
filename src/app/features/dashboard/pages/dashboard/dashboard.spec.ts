@@ -3,7 +3,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { signal } from '@angular/core';
 import { DashboardComponent } from '../../dashboard.component';
-import { AuthService, PermissionService } from 'ng-admin-core';
+import { AuthService, PermissionService } from '@labyrinth-team/ng-admin-core';
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent;

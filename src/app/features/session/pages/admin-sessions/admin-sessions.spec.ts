@@ -3,7 +3,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AdminSessions } from './admin-sessions';
-import { DialogService, NotificationService } from 'ng-admin-core';
+import { DialogService, NotificationService } from '@labyrinth-team/ng-admin-core';
 import { SessionApi } from '../../services/session-api';
 import { Session } from '../../models/session';
 import { of } from 'rxjs';

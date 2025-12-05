@@ -8,7 +8,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Role } from '../../models/role.model';
 import { RoleApi } from '../../services/role-api';
-import { BaseListComponent, SkeletonLoader, EmptyState } from 'ng-admin-core';
+import { BaseListComponent, SkeletonLoader, EmptyState } from '@labyrinth-team/ng-admin-core';
 
 /**
  * Role list page component with Material table and pagination

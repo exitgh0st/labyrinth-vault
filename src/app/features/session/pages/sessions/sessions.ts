@@ -8,7 +8,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SessionApi } from '../../services/session-api';
 import { Session } from '../../models/session';
-import { DialogService, NotificationService, SkeletonLoader, EmptyState } from 'ng-admin-core';
+import { DialogService, NotificationService, SkeletonLoader, EmptyState } from '@labyrinth-team/ng-admin-core';
 
 /**
  * Sessions list page component with Material table

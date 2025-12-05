@@ -7,7 +7,7 @@ import { User } from '../../models/user.model';
 import { UserForm } from '../../components/user-form/user-form';
 import { toSignal } from '@angular/core/rxjs-interop';
 import Swal from 'sweetalert2';
-import { AuthService, ListResponse } from 'ng-admin-core';
+import { AuthService, ListResponse } from '@labyrinth-team/ng-admin-core';
 
 @Component({
   selector: 'app-user-edit',

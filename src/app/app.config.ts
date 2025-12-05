@@ -10,7 +10,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { routes } from './app.routes';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { AppInitializer } from './core/services/app-initializer';
-import { authInterceptor, provideAdminCore, provideAuth } from 'ng-admin-core';
+import { authInterceptor, provideAdminCore, provideAuth } from '@labyrinth-team/ng-admin-core';
 import { environment } from '../environments/environment';
 
 export const appConfig: ApplicationConfig = {
