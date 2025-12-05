@@ -1,0 +1,192 @@
+<div class="admin-sessions-container">
+  <div class="header">
+    <div class="header-title">
+      <h1>
+        <mat-icon>admin_panel_settings</mat-icon>
+        Session Management
+      </h1>
+      <p class="subtitle">Manage all active user sessions across the system</p>
+    </div>
+    <div class="header-actions">
+      <button mat-raised-button color="accent" (click)="cleanupExpired()" matTooltip="Remove expired sessions">
+        <mat-icon>cleaning_services</mat-icon>
+        Cleanup Expired
+      </button>
+      <button mat-raised-button color="warn" (click)="cleanupRevoked()" matTooltip="Remove old revoked sessions">
+        <mat-icon>delete_sweep</mat-icon>
+        Cleanup Revoked
+      </button>
+    </div>
+  </div>
+
+  <!-- Stats Cards -->
+  <div class="stats-grid">
+    <mat-card class="stat-card">
+      <mat-icon class="stat-icon" style="color: #667eea;">devices</mat-icon>
+      <div class="stat-content">
+        <span class="stat-label">Total Sessions</span>
+        <span class="stat-value">{{ total() }}</span>
+      </div>
+    </mat-card>
+    <mat-card class="stat-card">
+      <mat-icon class="stat-icon" style="color: #4caf50;">check_circle</mat-icon>
+      <div class="stat-content">
+        <span class="stat-label">Active Sessions</span>
+        <span class="stat-value">{{ totalActiveSessions() }}</span>
+      </div>
+    </mat-card>
+    <mat-card class="stat-card">
+      <mat-icon class="stat-icon" style="color: #ff9800;">block</mat-icon>
+      <div class="stat-content">
+        <span class="stat-label">Revoked Sessions</span>
+        <span class="stat-value">{{ totalRevokedSessions() }}</span>
+      </div>
+    </mat-card>
+  </div>
+
+  <!-- Error Message -->
+  @if (error()) {
+    <div class="error-message">
+      <mat-icon>error</mat-icon>
+      <span>{{ error() }}</span>
+    </div>
+  }
+
+  <!-- Loading State -->
+  @if (loading()) {
+    <div class="table-container">
+      <lb-skeleton-loader [rows]="10" [columns]="7" type="table" />
+    </div>
+  }
+
+  <!-- Empty State -->
+  @if (!loading() && items().length === 0) {
+    <lb-empty-state
+      icon="devices"
+      title="No sessions found"
+      message="There are no active sessions in the system"
+    />
+  }
+
+  <!-- Sessions Table -->
+  @if (!loading() && items().length > 0) {
+    <div class="table-container">
+      <table mat-table [dataSource]="items()" class="sessions-table">
+        <!-- User Column -->
+        <ng-container matColumnDef="user">
+          <th mat-header-cell *matHeaderCellDef>User</th>
+          <td mat-cell *matCellDef="let session">
+            <div class="user-info">
+              <mat-icon class="user-icon">account_circle</mat-icon>
+              <div class="user-details">
+                <span class="user-name">{{ getUserDisplayName(session) }}</span>
+                @if (session.user && session.user.email !== getUserDisplayName(session)) {
+                  <span class="user-email">{{ session.user.email }}</span>
+                }
+              </div>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Device Column -->
+        <ng-container matColumnDef="device">
+          <th mat-header-cell *matHeaderCellDef>Device</th>
+          <td mat-cell *matCellDef="let session">
+            <div class="device-info">
+              <mat-icon>{{ getDeviceIcon(session.userAgent) }}</mat-icon>
+              <span>{{ getDeviceInfo(session.userAgent) }}</span>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- IP Address Column -->
+        <ng-container matColumnDef="ipAddress">
+          <th mat-header-cell *matHeaderCellDef>IP Address</th>
+          <td mat-cell *matCellDef="let session">
+            {{ session.ipAddress || 'N/A' }}
+          </td>
+        </ng-container>
+
+        <!-- Status Column -->
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td mat-cell *matCellDef="let session">
+            @if (session.isRevoked) {
+              <mat-chip color="warn">Revoked</mat-chip>
+            } @else if (isExpired(session.expiresAt)) {
+              <mat-chip>Expired</mat-chip>
+            } @else {
+              <mat-chip color="primary">Active</mat-chip>
+            }
+          </td>
+        </ng-container>
+
+        <!-- Created At Column -->
+        <ng-container matColumnDef="createdAt">
+          <th mat-header-cell *matHeaderCellDef>Created</th>
+          <td mat-cell *matCellDef="let session">
+            {{ formatDate(session.createdAt) }}
+          </td>
+        </ng-container>
+
+        <!-- Last Used Column -->
+        <ng-container matColumnDef="lastUsed">
+          <th mat-header-cell *matHeaderCellDef>Last Used</th>
+          <td mat-cell *matCellDef="let session">
+            {{ formatDate(session.lastUsedAt) }}
+          </td>
+        </ng-container>
+
+        <!-- Expires At Column -->
+        <ng-container matColumnDef="expiresAt">
+          <th mat-header-cell *matHeaderCellDef>Expires</th>
+          <td mat-cell *matCellDef="let session">
+            {{ formatDate(session.expiresAt) }}
+          </td>
+        </ng-container>
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let session" class="actions-cell">
+            @if (!session.isRevoked) {
+              <button
+                mat-icon-button
+                color="warn"
+                (click)="revokeSession(session.id)"
+                matTooltip="Revoke session">
+                <mat-icon>block</mat-icon>
+              </button>
+            }
+            <button
+              mat-icon-button
+              color="warn"
+              (click)="deleteSession(session.id)"
+              matTooltip="Delete session">
+              <mat-icon>delete</mat-icon>
+            </button>
+            <button
+              mat-icon-button
+              (click)="revokeAllForUser(session.userId)"
+              matTooltip="Revoke all sessions for this user">
+              <mat-icon>logout</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="table-row"></tr>
+      </table>
+
+      <!-- Paginator -->
+      <mat-paginator
+        [length]="total()"
+        [pageSize]="take()"
+        [pageIndex]="currentPage() - 1"
+        [pageSizeOptions]="pageSizeOptions"
+        (page)="onPageChange($event)"
+        showFirstLastButtons
+      />
+    </div>
+  }
+</div>

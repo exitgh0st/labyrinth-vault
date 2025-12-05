@@ -50,6 +50,13 @@ export const routes: Routes = [
     canActivate: [authGuard, roleGuard([RoleEnum.ADMIN])]
   },
 
+  // User's personal sessions
+  {
+    path: 'sessions',
+    loadComponent: () => import('./features/session/pages/sessions/sessions').then(m => m.Sessions),
+    canActivate: [authGuard]
+  },
+
   // Session management routes (requires admin role)
   {
     path: 'admin/sessions',
