@@ -53,27 +53,31 @@ export abstract class BaseListComponent<T, ID = number> implements OnInit {
   loading = signal(false);
   error = signal('');
 
-  // Pagination query
-  query: ListQuery = {
-    skip: 0,
-    take: 10
-  };
+  // Pagination signals
+  protected skip = signal(0);
+  protected take = signal(10);
+
+  // Pagination query (computed from signals)
+  query = computed<ListQuery>(() => ({
+    skip: this.skip(),
+    take: this.take()
+  }));
 
   // Computed properties for pagination
   hasNextPage = computed(() =>
-    this.query.skip! + this.query.take! < this.total()
+    this.skip() + this.take() < this.total()
   );
 
   hasPreviousPage = computed(() =>
-    this.query.skip! > 0
+    this.skip() > 0
   );
 
   currentPage = computed(() =>
-    Math.floor(this.query.skip! / this.query.take!) + 1
+    Math.floor(this.skip() / this.take()) + 1
   );
 
   totalPages = computed(() =>
-    Math.ceil(this.total() / this.query.take!)
+    Math.ceil(this.total() / this.take())
   );
 
   ngOnInit(): void {
@@ -87,7 +91,7 @@ export abstract class BaseListComponent<T, ID = number> implements OnInit {
     this.loading.set(true);
     this.error.set('');
 
-    this.apiService.getAll(this.query).subscribe({
+    this.apiService.getAll(this.query()).subscribe({
       next: (response) => {
         this.items.set(response.data);
         this.total.set(response.total);
@@ -157,7 +161,7 @@ export abstract class BaseListComponent<T, ID = number> implements OnInit {
    */
   nextPage(): void {
     if (this.hasNextPage()) {
-      this.query.skip = this.query.skip! + this.query.take!;
+      this.skip.set(this.skip() + this.take());
       this.loadItems();
     }
   }
@@ -167,7 +171,7 @@ export abstract class BaseListComponent<T, ID = number> implements OnInit {
    */
   previousPage(): void {
     if (this.hasPreviousPage()) {
-      this.query.skip = Math.max(0, this.query.skip! - this.query.take!);
+      this.skip.set(Math.max(0, this.skip() - this.take()));
       this.loadItems();
     }
   }
@@ -177,9 +181,9 @@ export abstract class BaseListComponent<T, ID = number> implements OnInit {
    * @param page - The page number (1-indexed)
    */
   goToPage(page: number): void {
-    const newSkip = (page - 1) * this.query.take!;
+    const newSkip = (page - 1) * this.take();
     if (newSkip >= 0 && newSkip < this.total()) {
-      this.query.skip = newSkip;
+      this.skip.set(newSkip);
       this.loadItems();
     }
   }
@@ -189,8 +193,8 @@ export abstract class BaseListComponent<T, ID = number> implements OnInit {
    * @param pageSize - The new page size
    */
   changePageSize(pageSize: number): void {
-    this.query.take = pageSize;
-    this.query.skip = 0; // Reset to first page
+    this.take.set(pageSize);
+    this.skip.set(0); // Reset to first page
     this.loadItems();
   }
 

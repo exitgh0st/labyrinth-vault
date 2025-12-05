@@ -49,8 +49,8 @@ export class RoleList extends BaseListComponent<Role, number> {
    * Handles page change events from MatPaginator
    */
   onPageChange(event: PageEvent): void {
-    this.query.take = event.pageSize;
-    this.query.skip = event.pageIndex * event.pageSize;
+    this.take.set(event.pageSize);
+    this.skip.set(event.pageIndex * event.pageSize);
     this.loadItems();
   }
 
